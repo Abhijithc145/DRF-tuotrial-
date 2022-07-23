@@ -1,24 +1,18 @@
-from re import M
-from django.shortcuts import render
 from .models import *
-from django.http import JsonResponse
-# Create your views here.
+from .serializers import *
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
+# Create your views here.
+@api_view()
 def Movielist(request):
     movie = Movie.objects.all()
-    print(movie)
-    data = {
+    serializer = MovieSerilizer(movie,many=True)
+    return Response(serializer.data)
 
-               'movies':list(movie.values())
-           }
-    return JsonResponse(data)
 
+@api_view(('GET',))
 def Movielists(request,pk):
     movie = Movie.objects.get(pk=pk)
-    print(movie)
-    data = {
-                'name':movie.name,
-                'discription' :movie.discription,
-                'active' : movie.active,
-           }
-    return JsonResponse(data)    
+    serializer = MovieSerilizer(movie)
+    return Response(serializer.data)    
