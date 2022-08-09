@@ -1,3 +1,4 @@
+from cgitb import lookup
 from rest_framework import serializers
 from whatchapp.models import *
 from .models import *
@@ -13,13 +14,9 @@ class WatchListSerilizer(serializers.ModelSerializer):
         fields ="__all__"
      
 
-class StreamSerilizer(serializers.ModelSerializer):
+class StreamSerilizer(serializers.HyperlinkedModelSerializer):
     # len_name = serializers.SerializerMethodField()
-    watchlist =serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only = True,
-        view_name='Movielists',
-    )
+    watch = WatchListSerilizer(many= True,read_only = True,lookup)
     class Meta:
         model=StreamPlatform
         fields ="__all__"

@@ -69,7 +69,7 @@ class Stream(APIView):
 class Streams(APIView):
     def get(self,request,pk):
         platform = StreamPlatform.objects.get(pk = pk)
-        serializer = StreamSerilizer(platform)
+        serializer = StreamSerilizer(platform,)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
     def put(self,request,pk):
