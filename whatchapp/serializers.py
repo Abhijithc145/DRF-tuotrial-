@@ -6,7 +6,8 @@ from .models import *
 
 
 class WatchListSerilizer(serializers.ModelSerializer):
-    len_name = serializers.SerializerMethodField()
+    # len_name = serializers.SerializerMethodField()
+    
     class Meta:
         model=Watchlist
         fields ="__all__"
@@ -14,6 +15,7 @@ class WatchListSerilizer(serializers.ModelSerializer):
 
 class StreamSerilizer(serializers.ModelSerializer):
     # len_name = serializers.SerializerMethodField()
+    watchlist = WatchListSerilizer(many= True,read_only=True)
     class Meta:
         model=StreamPlatform
         fields ="__all__"
