@@ -5,16 +5,28 @@ from .models import *
 
 
 
-
-
-
-
-
 class MovieSerilizer(serializers.ModelSerializer):
+    len_name = serializers.SerializerMethodField()
     class Meta:
-        models=Movie
-        fields="__all__"
+        model=Movie
+        fields ="__all__"
         # exclude=["active"]
+
+    def get_len_name(self,objects):
+        return len(objects.name)    
+
+
+    def validate_name(self, value):
+        if len(value) < 2:
+            raise serializers.ValidationError("Name is too short")  
+        else:
+            return value
+
+    def validate(self, data):
+        if data['name']==data['discription']:
+            raise serializers.ValidationError({"Title and Docmentations are be different"})   
+        else :
+            return data     
 
 
 
