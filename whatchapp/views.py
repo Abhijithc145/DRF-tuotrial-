@@ -55,7 +55,7 @@ class WatchLists(APIView):
 class Stream(APIView):
     def get(self,request):
         platform = StreamPlatform.objects.all()
-        serializer = StreamSerilizer(platform,many= True)
+        serializer = StreamSerilizer(platform,many= True,context={'request': request})
         return Response(serializer.data)
 
     def post(self,request):
