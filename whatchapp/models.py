@@ -35,7 +35,7 @@ class Watchlist (models.Model):
 
 
 class Review(models.Model):
-    rating = models.PositiveIntegerField(vali=[MinValueValidator(1),MaxValueValidator(5)])
+    rating = models.PositiveIntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)])
     description = models.CharField(max_length=200,null=True)
     watchlist = models.ForeignKey(Watchlist,on_delete=models.CASCADE,related_name="reviews")
     active = models.BooleanField(default=True)
@@ -43,4 +43,4 @@ class Review(models.Model):
     update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.rating) +" "+ self.watchlist.title
+        return str(self.rating) +"__"+ self.watchlist.title

@@ -16,12 +16,17 @@ class WatchListSerilizer(serializers.ModelSerializer):
 
 class StreamSerilizer(serializers.HyperlinkedModelSerializer):
     # len_name = serializers.SerializerMethodField()
-    watch = WatchListSerilizer(many= True,read_only = True,lookup)
+    watch = WatchListSerilizer(many= True,read_only = True)
     class Meta:
         model=StreamPlatform
         fields ="__all__"
      
-
+class ReviewSerilizer(serializers.ModelSerializer):
+    # len_name = serializers.SerializerMethodField()
+    watch = WatchListSerilizer(many= True,read_only = True)
+    class Meta:
+        model=Review
+        fields ="__all__"
 
 
 
