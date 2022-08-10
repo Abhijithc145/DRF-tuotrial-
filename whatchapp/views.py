@@ -1,4 +1,5 @@
 from platform import platform
+from shutil import move
 from .models import *
 from .serializers import (ReviewSerilizer,WatchListSerilizer,StreamSerilizer)
 from rest_framework.response import Response
@@ -11,37 +12,28 @@ from rest_framework import generics
 
 
 # Create your views here.
+class ReviewList_Create(generics.CreateAPIView):
+    print(".........6.....................")
+    serializer_class = ReviewSerilizer
 
+    def perform_create(self, serializer):
+        print("...............8.....................")
+        pk = self.kwargs.get('pk')
+        Movie = Watchlist.objects.get(pk=pk)
+        serializer.save(Watchlist=Movie)
 
 class ReviewList(generics.ListCreateAPIView):
-    queryset = Review.objects.all()
+    # queryset = Review.objects.all()
     serializer_class=ReviewSerilizer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.objects.filter(watchlist = pk)
 
 
 class ReviewLists(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class=ReviewSerilizer  
-
-
-# class ReviewList(mixins.ListModelMixin,
-#                   mixins.CreateModelMixin,
-#                   generics.GenericAPIView):
-#     queryset = Review.objects.all()
-#     serializer_class = ReviewSerilizer
-
-#     def get(self, request, *args, **kwargs):
-#         return self.list(request, *args, **kwargs)
-
-#     def post(self, request, *args, **kwargs):
-#         return self.create(request, *args, **kwargs)
-
-
-# class ReviewLists(mixins.RetrieveModelMixin, generics.GenericAPIView):
-#     queryset = Review.objects.all()
-#     serializer_class = ReviewSerilizer
-
-#     def get(self, request, *args, **kwargs):
-#         return self.retrieve(request, *args, **kwargs)
 
 
 
