@@ -1,26 +1,30 @@
-from platform import platform
-from shutil import move
+
+from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import (ReviewSerilizer,WatchListSerilizer,StreamSerilizer)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
+from rest_framework import viewsets
+
 
 # from rest_framework import mixins
 from rest_framework import generics
 
+from whatchapp import serializers
+
 
 # Create your views here.
-class ReviewList_Create(generics.CreateAPIView):
-    print(".........6.....................")
-    serializer_class = ReviewSerilizer
+# class ReviewList_Create(generics.CreateAPIView):
+#     print(".........6.....................")
+#     serializer_class = ReviewSerilizer
 
-    def perform_create(self, serializer):
-        print("...............8.....................")
-        pk = self.kwargs.get('pk')
-        Movie = Watchlist.objects.get(pk=pk)
-        serializer.save(Watchlist=Movie)
+#     def perform_create(self, serializer):
+#         print("...............8.....................")
+#         pk = self.kwargs.get('pk')
+#         Movie = Watchlist.objects.get(pk=pk)
+#         serializer.save(Watchlist=Movie)
 
 class ReviewList(generics.ListCreateAPIView):
     # queryset = Review.objects.all()
@@ -95,6 +99,20 @@ class Stream(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)   
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)     
+
+
+# class StreamplatformAV(viewsets.ViewSet):
+#     def list(self,request):
+#         queryset = StreamPlatform.objects.all()
+#         serializer = StreamSerilizer(queryset,many= True)
+#         return Response(serializer.data)
+
+#     def retrieve(self,request,pk=None):
+#         queryset = StreamPlatform.objects.all()
+#         watchlist = get_object_or_404(queryset,pk=pk)   
+#         serializer = StreamSerilizer(Stream) 
+
+
 
 class Streams(APIView):
     def get(self,request,pk):
