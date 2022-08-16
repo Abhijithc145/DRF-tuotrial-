@@ -11,6 +11,9 @@ from django.urls import path
 
 
 
+
+
+
 urlpatterns = [
     path("list/",WatchList.as_view(),name='Movielist'),
     path("list/<int:pk>",WatchLists.as_view(),name='Movielists'),
