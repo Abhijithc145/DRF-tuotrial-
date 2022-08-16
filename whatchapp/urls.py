@@ -19,6 +19,8 @@ urlpatterns = [
     path("list/<int:pk>",WatchLists.as_view(),name='Movielists'),
     
 
+    
+
     # path("",include(router.urls)),
     path("stream/",Stream.as_view(),name='StreamPlatform'),
     path("stream/<int:pk>",Streams.as_view(),name='StreamPlatforms'),
